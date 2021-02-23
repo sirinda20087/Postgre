@@ -13,81 +13,78 @@ db = SQLAlchemy(app)
 #init
 ma = Marshmallow(app)
 
-#Staff Class/Model
-class Staffs(db.Model):
-    id = db.Column(db.String(13), primary_key=True, unique=True)
+#catergory Class/Model
+class catergory(db.Model):
+    id = db.Column(db.String(4), primary_key=True, unique=True)
     name = db.Column(db.String(50))
-    email = db.Column(db.String(25))
-    phone = db.Column(db.String(10))
+    size = db.Column(db.String(10))
     
-    def __init__(self, id, name, email, phone):
+    
+    def __init__(self, id, name, size):
         self.id = id
         self.name = name
-        self.email = email
-        self.phone = phone
+        self.size = size
+       
 
-# Staff Schema
-class StaffSchema(ma.Schema):
+# catergory Schema
+class catergorySchema(ma.Schema):
     class Meta:
-        fields =('id', 'name', 'email', 'phone')
+        fields =('id','name' , 'size')
 
 # Init Schema 
-staff_schema = StaffSchema()
-staffs_schema = StaffSchema(many=True)
+catergory_schema = catergorySchema()
+catergory_schema = catergorySchema(many=True)
 
-# Get All Staffs
-@app.route('/staffs', methods=['GET'])
-def get_staffs():
-    all_staffs = Staffs.query.all()
-    result = staffs_schema.dump(all_staffs)
+# Get All catergory
+@app.route('/catergory', methods=['GET'])
+def get_catergory():
+    all_catergory = catergory.query.all()
+    result = catergory_schema.dump(all_catergory)
     return jsonify(result)
 
-    # Get Single Staff
-@app.route('/staff/<id>', methods=['GET'])
-def get_staff(id):
-    staff = Staffs.query.get(id)
-    return staff_schema.jsonify(staff)
+    # Get Single catergory
+@app.route('/catergory/<id>', methods=['GET'])
+def get_catergory(id):
+    catergory = catergory.query.get(id)
+    return catergory_schema.jsonify(catergory)
 
-# Create a Staff
-@app.route('/staff', methods=['POST'])
-def add_staff():
+# Create a catergory
+@app.route('/catergory', methods=['POST'])
+def add_catergory():
     id = request.json['id']
     name = request.json['name']
-    email = request.json['email']
-    phone = request.json['phone']
+    size = request.json['size']
 
-    new_staff = Staffs(id, name, email, phone)
+    new_catergory = catergory(id, name, size)
 
-    db.session.add(new_staff)
+    db.session.add(new_catergory)
     db.session.commit()
 
-    return staff_schema.jsonify(new_staff)
+    return catergory_schema.jsonify(new_catergory)
 
-# Update a Staff
-@app.route('/staff/<id>', methods=['PUT'])
-def update_staff(id):
-    staff = Staffs.query.get(id)
+# Update a catergory
+@app.route('/catergory/<id>', methods=['PUT'])
+def update_catergory(id):
+    catergory = catergory.query.get(id)
     
     name = request.json['name']
-    email = request.json['email']
-    phone = request.json['phone']
+    size = request.json['size']
 
-    staff.name = name
-    staff.email = email
-    staff.phone = phone
+    catergory.name = name
+    catergory.size = size
 
     db.session.commit()
 
-    return staff_schema.jsonify(staff)
+    return catergory_schema.jsonify(catergory)
 
-# Delete Staff
-@app.route('/staff/<id>', methods=['DELETE'])
-def delete_staff(id):
-    staff = Staffs.query.get(id)
-    db.session.delete(staff)
+# Delete catergory
+@app.route('/catergory/<id>', methods=['DELETE'])
+def delete_catergory(id):
+    catergory = catergory.query.get(id)
+    db.session.delete(catergory)
     db.session.commit()
     
-    return staff_schema.jsonify(staff)
+    return catergory_schema.jsonify(catergory)
 
 # Web Root Hello
 @app.route('/', methods=['GET'])
