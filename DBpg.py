@@ -14,7 +14,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 #catergory Class/Model
-class catergory(db.Model):
+class Catergorys(db.Model):
     id = db.Column(db.String(4), primary_key=True, unique=True)
     name = db.Column(db.String(50))
     size = db.Column(db.String(10))
@@ -27,64 +27,64 @@ class catergory(db.Model):
        
 
 # catergory Schema
-class catergorySchema(ma.Schema):
+class CatergorySchema(ma.Schema):
     class Meta:
         fields =('id','name' , 'size')
 
 # Init Schema 
-catergory_schema = catergorySchema()
-catergory_schema = catergorySchema(many=True)
+catergory_schema = CatergorySchema()
+catergorys_schema = CatergorySchema(many=True)
 
 # Get All catergory
 @app.route('/catergory', methods=['GET'])
-def get_catergory():
-    all_catergory = catergory.query.all()
-    result = catergory_schema.dump(all_catergory)
+def get_catergorys():
+    all_catergorys = Catergorys.query.all()
+    result = catergorys_schema.dump(all_catergorys)
     return jsonify(result)
 
-    # Get Single catergory
-@app.route('/catergory/<id>', methods=['GET'])
-def get_catergory(id):
-    catergory = catergory.query.get(id)
-    return catergory_schema.jsonify(catergory)
+# # Get Single catergory
+# @app.route('/catergory/<id>', methods=['GET'])
+# def get_catergory(id):
+#     catergory = catergory.query.get(id)
+#     return catergory_schema.jsonify(catergory)
 
-# Create a catergory
-@app.route('/catergory', methods=['POST'])
-def add_catergory():
-    id = request.json['id']
-    name = request.json['name']
-    size = request.json['size']
+# # Create a catergory
+# @app.route('/catergory', methods=['POST'])
+# def add_catergory():
+#     id = request.json['id']
+#     name = request.json['name']
+#     size = request.json['size']
 
-    new_catergory = catergory(id, name, size)
+#     new_catergory = catergory(id, name, size)
 
-    db.session.add(new_catergory)
-    db.session.commit()
+#     db.session.add(new_catergory)
+#     db.session.commit()
 
-    return catergory_schema.jsonify(new_catergory)
+#     return catergory_schema.jsonify(new_catergory)
 
-# Update a catergory
-@app.route('/catergory/<id>', methods=['PUT'])
-def update_catergory(id):
-    catergory = catergory.query.get(id)
+# # Update a catergory
+# @app.route('/catergory/<id>', methods=['PUT'])
+# def update_catergory(id):
+#     catergory = catergory.query.get(id)
     
-    name = request.json['name']
-    size = request.json['size']
+#     name = request.json['name']
+#     size = request.json['size']
 
-    catergory.name = name
-    catergory.size = size
+#     catergory.name = name
+#     catergory.size = size
 
-    db.session.commit()
+#     db.session.commit()
 
-    return catergory_schema.jsonify(catergory)
+#     return catergory_schema.jsonify(catergory)
 
-# Delete catergory
-@app.route('/catergory/<id>', methods=['DELETE'])
-def delete_catergory(id):
-    catergory = catergory.query.get(id)
-    db.session.delete(catergory)
-    db.session.commit()
+# # Delete catergory
+# @app.route('/catergory/<id>', methods=['DELETE'])
+# def delete_catergory(id):
+#     catergory = catergory.query.get(id)
+#     db.session.delete(catergory)
+#     db.session.commit()
     
-    return catergory_schema.jsonify(catergory)
+#     return catergory_schema.jsonify(catergory)
 
 # Web Root Hello
 @app.route('/', methods=['GET'])
