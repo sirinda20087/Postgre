@@ -6,7 +6,7 @@ from flask_marshmallow import Marshmallow
 app = Flask(__name__)
 
 #database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:FMZkon18745@10.100.2.193:5432/CloudDB'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:FMZkon18745@10.100.2.193:5432/KitchenWare'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #init db
 db = SQLAlchemy(app)
@@ -92,7 +92,7 @@ def delete_staff(id):
 # Web Root Hello
 @app.route('/', methods=['GET'])
 def get():
-    return jsonify({'ms': 'Hello Cloud DB1 poonpun'})
+    return jsonify({'WELCOME TO KITCHEN WARE STORE'})
 
 # Run Server
 if __name__ == "__main__":
